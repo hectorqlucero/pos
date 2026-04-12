@@ -1,0 +1,125 @@
+/* POS - Point of Sale Styles */
+
+/* Product cards */
+.pos-card-clickable {
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pos-card-clickable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.pos-card-clickable:active {
+    transform: translateY(0);
+}
+
+.pos-product-img {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cart item rows */
+.pos-cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.pos-cart-row:last-child {
+    border-bottom: none;
+}
+
+.pos-cart-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.pos-cart-qty {
+    width: 60px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.pos-cart-price {
+    width: 90px;
+    text-align: right;
+    font-weight: 500;
+}
+
+.pos-cart-remove {
+    cursor: pointer;
+    color: #dc3545;
+    margin-left: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.pos-cart-remove:hover {
+    color: #a71d2a;
+}
+
+/* Quantity controls in cart */
+.pos-qty-btn {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: 0.85rem;
+    line-height: 1;
+    border-radius: 50%;
+}
+
+/* Search highlight */
+.pos-product-card.hidden {
+    display: none !important;
+}
+
+/* Sale completed animation */
+.pos-sale-success {
+    animation: posFlash 0.6s ease;
+}
+
+@keyframes posFlash {
+    0% {
+        background-color: #d4edda;
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Receipt print styles */
+@media print {
+    body>*:not(#pos-receipt) {
+        display: none !important;
+    }
+
+    #pos-receipt {
+        display: block !important;
+        font-family: 'Courier New', monospace;
+        font-size: 12px;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    #pos-receipt .receipt-line {
+        border-top: 1px dashed #000;
+        margin: 8px 0;
+    }
+}
+
+/* Responsive tweaks */
+@media (max-width: 991.98px) {
+    .pos-product-img {
+        height: 60px;
+    }
+
+    .pos-product-img i {
+        font-size: 2rem !important;
+    }
+}

@@ -1,0 +1,49 @@
+;; AUTO-GENERATED entity configuration for provedores
+;; Generated: 2026-04-10T16:37:46.576315087
+;; 
+;; This file was scaffolded from the database schema.
+;; Feel free to edit and customize as needed.
+;; 
+
+{:entity :provedores
+ :title "Provedores"  ;; Edit this to your preference
+ :table "provedores"
+ :connection :default
+ :rights ["U" "A" "S"]  ;; User levels: U=User, A=Admin, S=System
+ :mode :parameter-driven
+ :menu-category :Provedores
+ :menu-order 20
+
+ ;; Fields auto-detected from database schema
+ :fields [{:id :id :label "ID" :type :hidden}
+          {:id :nombre :label "Nombre" :type :text :placeholder "Nombre..."}
+          {:id :email :label "Email" :type :email :placeholder "user@example.com"}
+          {:id :telefono :label "Telefono" :type :text :placeholder "Telefono..."}]
+
+ ;; Auto-generated queries (customize as needed)
+ :queries {:list "SELECT * FROM provedores ORDER BY id DESC"
+           :get "SELECT * FROM provedores WHERE id = ?"}
+
+ ;; Available actions
+ :actions {:new true :edit true :delete true}
+
+ ;; Enable audit trail (tracks who created/modified and when)
+ ;; Uncomment to enable:
+ ;; :audit? true
+
+ ;; Lifecycle hooks for business logic
+ ;; Senior developer: Implement these in src/inv/hooks/provedores.clj
+ ;; Uncomment and implement as needed:
+ ;; :hooks {:before-load :inv.hooks.provedores/before-load
+ ;;         :after-load :inv.hooks.provedores/after-load
+ ;;         :before-save :inv.hooks.provedores/before-save
+ ;;         :after-save :inv.hooks.provedores/after-save
+ ;;         :before-delete :inv.hooks.provedores/before-delete
+ ;;         :after-delete :inv.hooks.provedores/after-delete}
+
+ ;; Subgrids for related tables (auto-detected)
+ :subgrids [{:entity :inventario
+             :title "Inventario"
+             :foreign-key :provedor_id
+             :icon "bi bi-currency-dollar"
+             :label "Inventario"}]}

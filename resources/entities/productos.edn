@@ -1,0 +1,56 @@
+;; AUTO-GENERATED entity configuration for productos
+;; Generated: 2026-04-10T16:38:08.519196992
+;; 
+;; This file was scaffolded from the database schema.
+;; Feel free to edit and customize as needed.
+;; 
+
+{:entity :productos
+ :title "Productos"  ;; Edit this to your preference
+ :table "productos"
+ :connection :default
+ :rights ["U" "A" "S"]  ;; User levels: U=User, A=Admin, S=System
+ :mode :parameter-driven
+ :menu-category :Productos
+ :menu-order 10
+
+ ;; Fields auto-detected from database schema
+ :fields [{:id :id :label "ID" :type :hidden}
+          {:id :nombre :label "Nombre" :type :text :placeholder "Nombre..."}
+          {:id :precio :label "Precio" :type :decimal}
+          {:id :categoria :label "Categoria" :type :text :placeholder "Categoria..."}
+          {:id :imagen :label "Imagen" :type :file}]
+
+ ;; Auto-generated queries (customize as needed)
+ :queries {:list "SELECT * FROM productos ORDER BY id DESC"
+           :get "SELECT * FROM productos WHERE id = ?"}
+
+ ;; Available actions
+ :actions {:new true :edit true :delete true}
+
+ ;; Enable audit trail (tracks who created/modified and when)
+ ;; Uncomment to enable:
+ ;; :audit? true
+
+ ;; Lifecycle hooks for business logic
+ ;; Senior developer: Implement these in src/inv/hooks/productos.clj
+ ;; Uncomment and implement as needed:
+ :hooks {         ;;         :before-load :inv.hooks.productos/before-load
+         :after-load :inv.hooks.productos/after-load
+         :before-save :inv.hooks.productos/before-save
+         ;;         :after-save :inv.hooks.productos/after-save
+         ;;         :before-delete :inv.hooks.productos/before-delete
+         ;;         :after-delete :inv.hooks.productos/after-delete
+         }
+
+ ;; Subgrids for related tables (auto-detected)
+ :subgrids [{:entity :inventario
+             :title "Inventario"
+             :foreign-key :producto_id
+             :icon "bi bi-currency-dollar"
+             :label "Inventario"}
+            {:entity :movimientos
+             :title "Movimientos"
+             :foreign-key :producto_id
+             :icon "bi bi-list-ul"
+             :label "Movimientos"}]}
