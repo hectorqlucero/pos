@@ -5,7 +5,7 @@
    [ring.util.anti-forgery :refer [anti-forgery-field]]))
 
 (defn- product-image
-  "Render product image or placeholder icon"
+  "Generar la imagen del producto"
   [product]
   (if (not-empty (:imagen product))
     [:img {:src (str "/uploads/" (:imagen product))
@@ -14,7 +14,7 @@
     [:i.bi.bi-box-seam {:style "font-size: 3rem; color: #6c757d;"}]))
 
 (defn- product-card
-  "Render a single clickable product card"
+  "Generar una tarjeta"
   [product]
   [:div.col-6.col-md-4.col-xl-3.pos-product-card
    {:data-id (:id product)
@@ -31,14 +31,14 @@
      [:span.badge.bg-success.fs-6 (str "$" (:precio product))]]]])
 
 (defn- product-grid
-  "Render the grid of product cards"
+  "Generar el grid de tarjetas de productos"
   [productos]
   [:div#pos-product-grid.row.g-3
    (for [p productos]
      (product-card p))])
 
 (defn- search-bar
-  "Render the product search input"
+  "Generar la barra de busquedas"
   [request]
   [:div.mb-3
    [:div.input-group.input-group-lg
@@ -49,7 +49,7 @@
       :autocomplete "off"}]]])
 
 (defn- products-panel
-  "Render the left panel with product browsing"
+  "General el panel de la izquierda con busqueda de productos"
   [request productos]
   [:div.col-lg-8
    [:div.card.shadow-sm.border-0
@@ -70,7 +70,7 @@
        (i18n/tr request :pos/clear)]]]]])
 
 (defn- sale-details-panel
-  "Render the right panel with cart and payment"
+  "Generar el panel de la derecha con el carrito y pagos"
   [request csrf-token]
   [:div.col-lg-4
    [:div.card.shadow-sm.border-0
@@ -111,7 +111,7 @@
    [:div {:style "display:none;"} csrf-token]])
 
 (defn pos-view
-  "Render the POS interface content"
+  "Generar el interface de Punto de Venta"
   [request productos]
   (let [csrf-token (anti-forgery-field)]
     (list
