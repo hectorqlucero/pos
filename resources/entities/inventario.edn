@@ -1,85 +1,51 @@
-;; AUTO-GENERATED entity configuration for inventario
-;; Generated: 2026-04-10T16:37:35.318005536
-;; 
-;; This file was scaffolded from the database schema.
-;; Feel free to edit and customize as needed.
-;; 
+{:entity        :inventario
+ :title         "Inventario"
+ :table         "inventario"
+ :connection    :default
+ :rights        ["A" "S"]         ; Only admins can manage inventory directly
+ :mode          :parameter-driven
+ :menu-hidden?  true              ; Does not appear in the main menu
 
-{:entity :inventario
- :title "Inventario"  ;; Edit this to your preference
- :table "inventario"
- :connection :default
- :rights ["A" "S"]  ;; User levels: U=User, A=Admin, S=System
- :mode :parameter-driven
- :menu-hiden? true
- :menu-category :Administrar
-
- ;; Fields auto-detected from database schema
  :fields [{:id :id :label "ID" :type :hidden}
 
-          {:id :provedor_id
-           :label "Provedor"
-           :type :fk
-           :fk :provedores
-           :fk-field [:nombre]
+          ;; FK to provedores — hidden in grid, shown in form
+          {:id           :provedor_id
+           :label        "Proveedor"
+           :type         :fk
+           :fk           :provedores
+           :fk-field     [:nombre]
            :fk-can-create? true
            :hidden-in-grid? true}
-          {:id :provedor_nombre :label "Provedor" :grid-only? true}
+          {:id :provedor_nombre :label "Proveedor" :grid-only? true}
 
-          {:id :producto_id
-           :label "Producto"
-           :type :fk
-           :fk :productos
-           :fk-field [:nombre :precio]
+          ;; FK to productos — hidden in grid, shown in form
+          {:id           :producto_id
+           :label        "Producto"
+           :type         :fk
+           :fk           :productos
+           :fk-field     [:nombre :precio]
            :fk-can-create? true
            :hidden-in-grid? true}
           {:id :producto_nombre :label "Producto" :grid-only? true}
 
-          {:id :cantidad :label "Cantidad" :type :number}
+          {:id :cantidad :label "Cantidad" :type :number :min 0}]
 
-          ; {:id :ultima_actualizacion :label "Ultima Actualizacion" :type :date}
-          ]
+ :queries {:list "SELECT
+                    inv.*,
+                    pro.nombre  AS producto_nombre,
+                    pro1.nombre AS provedor_nombre
+                  FROM inventario inv
+                  LEFT JOIN productos  pro  ON inv.producto_id = pro.id
+                  LEFT JOIN provedores pro1 ON inv.provedor_id = pro1.id
+                  ORDER BY inv.id DESC"
 
- ;; Auto-generated queries (customize as needed)
- :queries {:list "SELECT 
-                 inv.*, 
-                 pro.nombre as producto_nombre, 
-                 pro1.nombre as provedor_nombre 
-                 FROM inventario inv 
-                 LEFT JOIN productos pro ON inv.producto_id = pro.id 
-                 LEFT JOIN provedores pro1 ON inv.provedor_id = pro1.id 
-                 ORDER BY inv.id DESC"
-           :get "SELECT
-                 inv.*, 
-                 pro.nombre as producto_nombre, 
-                 pro1.nombre as provedor_nombre 
-                 FROM inventario inv 
-                 LEFT JOIN productos pro ON inv.producto_id = pro.id 
-                 LEFT JOIN provedores pro1 ON inv.provedor_id = pro1.id 
-                WHERE inv.id = ?"}
+           :get  "SELECT
+                    inv.*,
+                    pro.nombre  AS producto_nombre,
+                    pro1.nombre AS provedor_nombre
+                  FROM inventario inv
+                  LEFT JOIN productos  pro  ON inv.producto_id = pro.id
+                  LEFT JOIN provedores pro1 ON inv.provedor_id = pro1.id
+                  WHERE inv.id = ?"}
 
- ;; Available actions
- :actions {:new true :edit true :delete true}
-
- ;; Enable audit trail (tracks who created/modified and when)
- ;; Uncomment to enable:
- ;; :audit? true
-
- ;; Lifecycle hooks for business logic
- ;; Senior developer: Implement these in src/inv/hooks/inventario.clj
- ;; Uncomment and implement as needed:
- ;; :hooks {:before-load :inv.hooks.inventario/before-load
- ;;         :after-load :inv.hooks.inventario/after-load
- ;;         :before-save :inv.hooks.inventario/before-save
- ;;         :after-save :inv.hooks.inventario/after-save
- ;;         :before-delete :inv.hooks.inventario/before-delete
- ;;         :after-delete :inv.hooks.inventario/after-delete}
-
- ;; Subgrids (parent-child relationships)
- ;; Uncomment if this entity has child records:
- ;; :subgrids [{:entity :related-table
- ;;             :title "Related Records"
- ;;             :foreign-key :parent_id
- ;;             :icon "bi bi-list"
- ;;             :label "Related Records"}]
- }
+ :actions {:new true :edit true :delete true}}

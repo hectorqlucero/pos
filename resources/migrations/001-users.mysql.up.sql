@@ -1,17 +1,16 @@
-CREATE TABLE users (
-  `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  `lastname` varchar(50) DEFAULT NULL,
-  `firstname` varchar(50) DEFAULT NULL,
-  `username` varchar(200) DEFAULT NULL,
-  `password` text DEFAULT NULL,
-  `dob` date DEFAULT NULL,
-  `cell` varchar(50) DEFAULT NULL,
-  `phone` varchar(50) DEFAULT NULL,
-  `fax` varchar(50) DEFAULT NULL,
-  `email` varchar(200) DEFAULT NULL,
-  `level` char(1) DEFAULT NULL COMMENT 'A=Administrador,U=Usuario,S=Sistema',
-  `active` char(1) DEFAULT NULL COMMENT 'T=Activo,F=Inactivo',
-  `imagen` text DEFAULT NULL,
-  `last_login` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  UNIQUE KEY username (username)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  lastname VARCHAR(255),
+  firstname VARCHAR(255),
+  username VARCHAR(255) UNIQUE,
+  password VARCHAR(255),
+  dob DATE,
+  cell VARCHAR(50),
+  phone VARCHAR(50),
+  fax VARCHAR(50),
+  email VARCHAR(255),
+  level CHAR(1),
+  active CHAR(1),
+  imagen VARCHAR(255),
+  last_login TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

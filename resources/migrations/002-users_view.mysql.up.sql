@@ -1,5 +1,6 @@
-CREATE VIEW users_view AS
-SELECT id,
+CREATE OR REPLACE VIEW users_view AS
+SELECT 
+    id,
     lastname,
     firstname,
     username,
@@ -12,16 +13,15 @@ SELECT id,
     active,
     imagen,
     last_login,
-    DATE_FORMAT(dob, '%d/%m/%Y') as dob_formatted,
+    DATE_FORMAT(dob, '%d/%m/%Y') AS dob_formatted,
     CASE
         WHEN level = 'U' THEN 'Usuario'
         WHEN level = 'A' THEN 'Administrador'
         ELSE 'Sistema'
-    END level_formatted,
+    END AS level_formatted,
     CASE
         WHEN active = 'T' THEN 'Activo'
         ELSE 'Inactivo'
-    END active_formatted
+    END AS active_formatted
 FROM users
-ORDER BY lastname,
-    firstname;
+ORDER BY lastname, firstname;

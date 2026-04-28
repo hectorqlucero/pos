@@ -1,0 +1,47 @@
+;; AUTO-GENERATED entity configuration for servicios
+;; Generated: 2026-04-25T13:21:51.144571467
+;; 
+;; This file was scaffolded from the database schema.
+;; Feel free to edit and customize as needed.
+;; 
+
+{:entity :servicios
+ :title "Servicios"  ;; Edit this to your preference
+ :table "servicios"
+ :connection :default
+ :rights ["U" "A" "S"]  ;; User levels: U=User, A=Admin, S=System
+ :mode :parameter-driven
+ :menu-hidden? true
+
+ ;; Fields auto-detected from database schema
+ :fields [{:id :id :label "ID" :type :hidden}
+          {:id :servicio :label "Servicio" :type :text :placeholder "Servicio..."}
+          {:id :detalles :label "Detalles" :type :textarea :placeholder "Detalles..."}]
+
+ ;; Auto-generated queries (customize as needed)
+ :queries {:list "SELECT * FROM servicios ORDER BY id DESC"
+           :get "SELECT * FROM servicios WHERE id = ?"}
+
+ ;; Available actions
+ :actions {:new true :edit true :delete true}
+
+ ;; Enable audit trail (tracks who created/modified and when)
+ ;; Uncomment to enable:
+ ;; :audit? true
+
+ ;; Lifecycle hooks for business logic
+ ;; Senior developer: Implement these in src/pos/hooks/servicios.clj
+ ;; Uncomment and implement as needed:
+ ;; :hooks {:before-load :pos.hooks.servicios/before-load
+ ;;         :after-load :pos.hooks.servicios/after-load
+ ;;         :before-save :pos.hooks.servicios/before-save
+ ;;         :after-save :pos.hooks.servicios/after-save
+ ;;         :before-delete :pos.hooks.servicios/before-delete
+ ;;         :after-delete :pos.hooks.servicios/after-delete}
+
+ ;; Subgrids for related tables (auto-detected)
+ :subgrids [{:entity :orden_servicios
+             :title "Orden Servicios"
+             :foreign-key :id_servicio
+             :icon "bi bi-list-ul"
+             :label "Orden Servicios"}]}

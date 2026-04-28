@@ -1,0 +1,75 @@
+;; AUTO-GENERATED entity configuration for bicicletas
+;; Generated: 2026-04-25T12:32:10.012015856
+;; 
+;; This file was scaffolded from the database schema.
+;; Feel free to edit and customize as needed.
+;; 
+
+{:entity :bicicletas
+ :title "Bicicletas"  ;; Edit this to your preference
+ :table "bicicletas"
+ :connection :default
+ :rights ["U" "A" "S"]  ;; User levels: U=User, A=Admin, S=System
+ :mode :parameter-driven
+ :menu-hidden? true
+
+ ;; Fields auto-detected from database schema
+ :fields [{:id :id :label "ID" :type :hidden}
+
+          {:id :id_cliente
+           :label "Cliente"
+           :type :fk
+           :fk :clientes
+           :fk-field [:nombre]
+           :fk-can-create? true
+           :hidden-in-grid? true}
+          {:id :cliente_nombre :label "Cliente" :grid-only? true}
+
+          {:id :marca_modelo :label "Marca Modelo" :type :text :placeholder "Marca Modelo..."}
+          {:id :tipo :label "Tipo" :type :select :options [{:value "" :label "Seleccione tipo..."}
+                                                           {:value "Montaña" :label "Montaña"}
+                                                           {:value "Carretera" :label "Carretera"}
+                                                           {:value "Híbrida" :label "Híbrida"}
+                                                           {:value "BMX" :label "BMX"}
+                                                           {:value "Plegable" :label "Plegable"}
+                                                           {:value "Eléctrica" :label "Eléctrica"}]}
+          {:id :numero_serie :label "Numero Serie" :type :text :placeholder "Numero Serie..."}
+          {:id :anio_aproximado :label "Anio Aproximado" :type :number}]
+
+ ;; Auto-generated queries (customize as needed)
+ :queries {:list "SELECT 
+                 bic.*, 
+                 cli.nombre as cliente_nombre 
+                 FROM bicicletas bic 
+                 LEFT JOIN clientes cli ON bic.id_cliente = cli.id 
+                 ORDER BY bic.id DESC"
+           :get "SELECT 
+                 bic.*, 
+                 cli.nombre as cliente_nombre 
+                 FROM bicicletas bic 
+                 LEFT JOIN clientes cli ON bic.id_cliente = cli.id 
+                WHERE bic.id = ?"}
+
+ ;; Available actions
+ :actions {:new true :edit true :delete true}
+
+ ;; Enable audit trail (tracks who created/modified and when)
+ ;; Uncomment to enable:
+ ;; :audit? true
+
+ ;; Lifecycle hooks for business logic
+ ;; Senior developer: Implement these in src/pos/hooks/bicicletas.clj
+ ;; Uncomment and implement as needed:
+ ;; :hooks {:before-load :pos.hooks.bicicletas/before-load
+ ;;         :after-load :pos.hooks.bicicletas/after-load
+ ;;         :before-save :pos.hooks.bicicletas/before-save
+ ;;         :after-save :pos.hooks.bicicletas/after-save
+ ;;         :before-delete :pos.hooks.bicicletas/before-delete
+ ;;         :after-delete :pos.hooks.bicicletas/after-delete}
+
+ ;; Subgrids for related tables (auto-detected)
+ :subgrids [{:entity :ordenes_trabajo
+             :title "Ordenes Trabajo"
+             :foreign-key :id_bicicleta
+             :icon "bi bi-list-ul"
+             :label "Ordenes Trabajo"}]}

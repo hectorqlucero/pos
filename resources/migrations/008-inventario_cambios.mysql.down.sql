@@ -1,1 +1,0 @@
-drop trigger if exists inventario_cambios;

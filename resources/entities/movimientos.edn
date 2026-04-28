@@ -1,71 +1,47 @@
-;; AUTO-GENERATED entity configuration for movimientos
-;; Generated: 2026-04-10T16:37:57.860905266
-;; 
-;; This file was scaffolded from the database schema.
-;; Feel free to edit and customize as needed.
-;; 
+{:entity        :movimientos
+ :title         "Movimientos"
+ :table         "movimientos"
+ :connection    :default
+ :rights        ["U" "A" "S"]
+ :mode          :parameter-driven
+ :menu-hidden?  true              ; Only accessed via the Productos subgrid
 
-{:entity :movimientos
- :title "Movimientos"  ;; Edit this to your preference
- :table "movimientos"
- :connection :default
- :rights ["U" "A" "S"]  ;; User levels: U=User, A=Admin, S=System
- :mode :parameter-driven
- :menu-hidden? true
-
- ;; Fields auto-detected from database schema
  :fields [{:id :id :label "ID" :type :hidden}
 
-          {:id :producto_id
-           :label "Procto"
-           :type :fk
-           :fk :productos
-           :fk-field [:nombre]
+          {:id           :producto_id
+           :label        "Producto"
+           :type         :fk
+           :fk           :productos
+           :fk-field     [:nombre]
            :fk-can-create? true
            :hidden-in-grid? true}
           {:id :producto_nombre :label "Producto" :grid-only? true}
 
-          {:id :tipo_movimiento :label "Tipo Movimiento" :type :select :required? true :options [{:value "venta" :label "Venta"}
-                                                                                                 {:value "compra" :label "Compra"}]}
-          ; {:id :fecha_movimiento :label "Fecha Movimiento" :type :date}
-          {:id :cantidad :label "Cantidad" :type :number :required? true}]
+          {:id      :tipo_movimiento
+           :label   "Tipo"
+           :type    :select
+           :required? true
+           :options [{:value "compra" :label "Compra"}
+                     {:value "venta"  :label "Venta"}]}
 
- ;; Auto-generated queries (customize as needed)
- :queries {:list "SELECT 
-                 mov.*, 
-                 pro.nombre as producto_nombre 
-                 FROM movimientos mov 
-                 LEFT JOIN productos pro ON mov.producto_id = pro.id 
-                 ORDER BY mov.id DESC"
-           :get "SELECT 
-                 mov.*, 
-                 pro.nombre as producto_nombre 
-                 FROM movimientos mov 
-                 LEFT JOIN productos pro ON mov.producto_id = pro.id 
-                WHERE mov.id = ?"}
+          {:id :cantidad :label "Cantidad" :type :number :required? true :min 1}]
 
- ;; Available actions
+ :queries {:list "SELECT
+                    mov.*,
+                    pro.nombre AS producto_nombre
+                  FROM movimientos mov
+                  LEFT JOIN productos pro ON mov.producto_id = pro.id
+                  ORDER BY mov.id DESC"
+
+           :get  "SELECT
+                    mov.*,
+                    pro.nombre AS producto_nombre
+                  FROM movimientos mov
+                  LEFT JOIN productos pro ON mov.producto_id = pro.id
+                  WHERE mov.id = ?"}
+
  :actions {:new true :edit true :delete true}
 
- ;; Enable audit trail (tracks who created/modified and when)
- ;; Uncomment to enable:
- ;; :audit? true
-
- ;; Lifecycle hooks for business logic
- ;; Senior developer: Implement these in src/inv/hooks/movimientos.clj
- ;; Uncomment and implement as needed:
- :hooks {:before-load :inv.hooks.movimientos/before-load
-         ;;         :after-load :inv.hooks.movimientos/after-load
-         ;;         :before-save :inv.hooks.movimientos/before-save
-         :after-save :inv.hooks.movimientos/after-save
-         :before-delete :inv.hooks.movimientos/before-delete
-         :after-delete :inv.hooks.movimientos/after-delete}
-
- ;; Subgrids (parent-child relationships)
- ;; Uncomment if this entity has child records:
- ;; :subgrids [{:entity :related-table
- ;;             :title "Related Records"
- ;;             :foreign-key :parent_id
- ;;             :icon "bi bi-list"
- ;;             :label "Related Records"}]
- }
+ :hooks {:after-save    :pos.hooks.movimientos/after-save
+         :before-delete :pos.hooks.movimientos/before-delete
+         :after-delete  :pos.hooks.movimientos/after-delete}}

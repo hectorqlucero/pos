@@ -69,27 +69,27 @@
 
  :connections {:mysql {:db-type   "mysql"
                        :db-class  "com.mysql.cj.jdbc.Driver"
-                       :db-name   "//localhost:3306/inv"
+                       :db-name   "//localhost:3306/pos"
                        :db-user   "root"
                        :db-pwd    "change_me"}
                :sqlite {:db-type   "sqlite"
                         :db-class  "org.sqlite.JDBC"
-                        :db-name   "db/inv.sqlite"}
+                        :db-name   "db/pos.sqlite"}
                :postgres {:db-type   "postgresql"
                           :db-class  "org.postgresql.Driver"
-                          :db-name   "//localhost:5432/contactos"
+                          :db-name   "//localhost:5432/pos"
                           :db-user   "postgres"
                           :db-pwd    "change_me"}
-               :main :mysql        ; Used for migrations (lein migrate)
-               :default :mysql     ; Used by the application
+               :main :sqlite        ; Used for migrations (lein migrate)
+               :default :sqlite     ; Used by the application
                :db :mysql           ; MySQL connection reference
                :pg :postgres        ; PostgreSQL connection reference
                :localdb :sqlite}    ; SQLite connection reference
 
  ;; --- Application Settings ---
- :uploads      "./uploads/inv/"
- :site-name    "Inventario"
- :company-name "Pescasoft Software Solutions"
+ :uploads      "./uploads/pos/"
+ :site-name    "POS"
+ :company-name "Pescasoft Systems"
  :port         3000
  :tz           "US/Pacific"
  :base-url     "http://localhost:3000/"

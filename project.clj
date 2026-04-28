@@ -1,5 +1,5 @@
-(defproject inv "0.1.0"
-  :description "inv"
+(defproject pos "0.1.0"
+  :description "pos"
   :url "http://example.com/FIXME" ; Change me - optional
   :license {:name "MIT License"
             :url "https://opensource.org/licenses/MIT"}
@@ -11,9 +11,11 @@
                  [hiccup "2.0.0"]
                  [buddy/buddy-hashers "2.0.167"]
                  [com.draines/postal "2.0.5"]
-                 [cheshire "6.1.0"]
+                 [cheshire "6.2.0"]
                  [clj-pdf "2.7.4"]
                  [ondrs/barcode "0.1.0"]
+                 [com.google.zxing/core "3.5.3"]
+                 [com.google.zxing/javase "3.5.3"]
                  [pdfkit-clj "0.1.7"]
                  [cljfmt "0.9.2"]
                  [clj-jwt "0.1.1"]
@@ -29,43 +31,43 @@
                  ;; [com.h2database/h2 "2.2.224"]                        ; H2
                  ;; [com.oracle.database.jdbc/ojdbc8 "21.11.0.0"]        ; Oracle (check licensing)
                  [ragtime "0.8.1"]
-                 [ring/ring-core "1.15.3"]
-                 [ring/ring-jetty-adapter "1.15.3"]
+                 [ring/ring-core "1.15.4"]
+                 [ring/ring-jetty-adapter "1.15.4"]
                  [ring/ring-defaults "0.7.0"]
-                 [ring/ring-devel "1.15.3"]
+                 [ring/ring-devel "1.15.4"]
                  [ring/ring-codec "1.3.0"]]
-  :main ^:skip-aot inv.core
-  :aot [inv.core]
+  :main pos.core
   :plugins [[lein-ancient "0.7.0"]
             [lein-pprint "1.3.2"]]
-  :uberjar-name "inv.jar"
+  :uberjar-name "pos.jar"
   :target-path "target/%s"
-  :ring {:handler inv.core
+  :ring {:handler pos.core
          :auto-reload? true
          :auto-refresh? false}
   :resource-paths ["shared" "resources"]
-  :aliases {"migrate"  ["run" "-m" "inv.migrations/migrate" "--"]
-            "rollback" ["run" "-m" "inv.migrations/rollback" "--"]
+  :aliases {"migrate"  ["run" "-m" "pos.migrations/migrate" "--"]
+            "rollback" ["run" "-m" "pos.migrations/rollback" "--"]
             ;; Forward any extra args to the seeder fn, e.g.:
             ;;   lein database          ; default (mysql)
             ;;   lein database pg       ; postgres (:pg)
             ;;   lein database :pg      ; postgres (:pg)
             ;;   lein database localdb  ; sqlite (:localdb)
-            "database" ["run" "-m" "inv.models.cdb/database" "--"]
-            "scaffold" ["run" "-m" "inv.engine.scaffold"]
+            "database" ["run" "-m" "pos.models.cdb/database" "--"]
+            "scaffold" ["run" "-m" "pos.engine.scaffold"]
             ;; Convert SQLite migrations to MySQL/PostgreSQL
             ;;   lein convert-migrations mysql        ; default (mysql)
             ;;   lein convert-migrations postgresql   ; postgres
-            "convert-migrations" ["run" "-m" "inv.db.converter" "--"]
+            "convert-migrations" ["run" "-m" "pos.db.converter" "--"]
             ;; Copy data from SQLite to MySQL/PostgreSQL
             ;;   lein copy-data mysql    ; copy from SQLite to MySQL
             ;;   lein copy-data postgresql
-            "copy-data" ["run" "-m" "inv.db.migrator" "--"]
+            "copy-data" ["run" "-m" "pos.db.migrator" "--"]
             ;; Generate/remove handler skeleton (controller, model, view)
             ;;   lein gen-handler reports          ; create
             ;;   lein gen-handler reports remove   ; remove
-            "gen-handler" ["run" "-m" "inv.gen.handler" "--"]}
+            "gen-handler" ["run" "-m" "pos.gen.handler" "--"]}
   :profiles {:uberjar {:aot :all
+                       :main pos.core
                        :jvm-opts ["-Dclojure.compiler.direct-linking=true"]}
              :dev {:source-paths ["src" "dev"]
-                   :main inv.dev}})
+                   :main pos.dev}})
