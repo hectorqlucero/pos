@@ -1,10 +1,11 @@
 (ns pos.routes.routes
   (:require
    [compojure.core :refer [defroutes GET POST]]
-   [pos.handlers.home.controller :as home-controller]))
+   [pos.handlers.home.controller :as home-controller]
+   [pos.handlers.dashboard.controller :as dashboard]))
 
 (defroutes open-routes
-  (GET "/" params [] (home-controller/main params))
+  (GET "/" params [] (dashboard/main params))
   (GET "/home/login" params [] (home-controller/login params))
   (POST "/home/login" params [] (home-controller/login-user params))
   (GET "/home/logoff" params [] (home-controller/logoff-user params)))
