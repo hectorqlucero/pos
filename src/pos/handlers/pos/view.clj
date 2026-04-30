@@ -32,22 +32,25 @@
      [:div.mt-2 (product-qr-code product)]]]])
 
 (defn- products-panel [request productos]
-  [:div.col-lg-8
-   [:div.card.shadow-sm.border-0
-    [:div.card-body
-     [:div.mb-3 [:button.btn.btn-primary.btn-lg {:type "button"}
-                 [:i.bi.bi-person-fill.me-2] (i18n/tr request :pos/public-sale)]]
-     [:div.mb-3
-      [:div.input-group.input-group-lg
-       [:span.input-group-text [:i.bi.bi-search]]
-       [:input#pos-search.form-control {:type "text" :placeholder (i18n/tr request :pos/search-product) :autocomplete "off"}]]]
-     [:h5.fw-bold.mb-3 (i18n/tr request :pos/best-sellers)]
-     [:div#pos-product-grid.row.g-3 (for [p productos] (product-card p))]
-     [:div.mt-3 [:div.d-flex.gap-2
-                 [:button.btn.btn-outline-secondary {:type "button" :onclick "POS.clearCart()"}
-                  [:i.bi.bi-pencil-square.me-2] (i18n/tr request :pos/clear)]
-                 [:button.btn.btn-outline-primary {:type "button" :data-bs-toggle "modal" :data-bs-target "#qrScannerModal"}
-                  [:i.bi.bi-qr-code-scan.me-2] (i18n/tr request :pos/scan-qr)]]]]]])
+  (let [csrf-token (or (some->> request :session :csrf-token) "")]
+    [:div.col-lg-8
+     [:div.d-flex.gap-2.mb-3
+      [:button.btn.btn-outline-secondary {:type "button" :onclick "POS.clearCart()"}
+       [:i.bi.bi-pencil-square.me-2] (i18n/tr request :pos/clear)]
+      [:button.btn.btn-outline-primary {:type "button" :data-bs-toggle "modal" :data-bs-target "#qrScannerModal"}
+       [:i.bi.bi-qr-code-scan.me-2] (i18n/tr request :pos/scan-qr)]
+      [:button.btn.btn-outline-warning {:type "button" :onclick "POS.addMiscCharge()"}
+       [:i.bi.bi-plus-circle.me-2] "Cargo"]]
+     [:div.card.shadow-sm.border-0
+      [:div.card-body
+       [:div.mb-3 [:button.btn.btn-primary.btn-lg {:type "button"}
+                   [:i.bi.bi-person-fill.me-2] (i18n/tr request :pos/public-sale)]]
+       [:div.mb-3
+        [:div.input-group.input-group-lg
+         [:span.input-group-text [:i.bi.bi-search]]
+         [:input#pos-search.form-control {:type "text" :placeholder (i18n/tr request :pos/search-product) :autocomplete "off"}]]]
+       [:h5.fw-bold.mb-3 (i18n/tr request :pos/best-sellers)]
+       [:div#pos-product-grid.row.g-3 (for [p productos] (product-card p))]]]]))
 
 (defn- sale-details-panel [request csrf-token]
   [:div.col-lg-4
@@ -106,4 +109,4 @@
      [:script "document.getElementById('pos-app').insertAdjacentHTML('beforeend', document.getElementById('qr-modal-template').textContent);"]
      [:script {:src "https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"}]
      [:script {:src "/js/qr-scanner.js"}]
-     [:script {:src "/js/pos.js?v=1"}]]))
+     [:script {:src "/js/pos.js?v=4"}]]))

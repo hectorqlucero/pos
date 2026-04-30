@@ -27,8 +27,6 @@ window.initQRRscanner = function() {
                     if (window.POS) {
                         POS.addItem(data.product.id);
                     }
-                    // Mark for reopen
-                    localStorage.setItem('reopen_qr_modal', '1');
                 } else {
                     alert('Producto no encontrado');
                 }
@@ -113,24 +111,4 @@ document.addEventListener('DOMContentLoaded', function() {
             closeQRScanner();
         });
     }
-    
-    // Poll for reopen flag every 500ms
-    setInterval(function() {
-        var shouldReopen = localStorage.getItem('reopen_qr_modal');
-        if (shouldReopen === '1') {
-            localStorage.removeItem('reopen_qr_modal');
-            var modalEl = document.getElementById('qrScannerModal');
-            if (modalEl && !modalEl.classList.contains('show')) {
-                closeQRScanner();
-                var bsModal = new bootstrap.Modal(modalEl, { 
-                    backdrop: 'static', 
-                    keyboard: false 
-                });
-                bsModal.show();
-                setTimeout(function() {
-                    window.initQRRscanner();
-                }, 500);
-            }
-        }
-    }, 500);
 });

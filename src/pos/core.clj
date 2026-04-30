@@ -4,7 +4,7 @@
    [compojure.route :as route]
    [pos.models.crud :refer [config KEY]]
    [pos.routes.proutes :refer [proutes]]
-   [pos.routes.routes :refer [open-routes password-routes]]
+   [pos.routes.routes :refer [open-routes password-routes cotizaciones-routes]]
    [pos.routes.i18n :refer [i18n-routes]]
    [pos.routes.tabgrid :refer [tabgrid-routes]]
    [pos.routes.fk-api :refer [fk-api-routes]]
@@ -145,8 +145,10 @@
      (wrap-routes open-routes)
      ;; I18n language switching routes
      (wrap-routes i18n-routes)
-     ;; Password change routes - protected
-     (wrap-login (wrap-routes password-routes))
+;; Password change routes - protected
+      (wrap-login (wrap-routes password-routes))
+      ;; Cotizaciones routes - protected
+      (wrap-login (wrap-routes cotizaciones-routes))
      ;; FK API routes (for dependent selects and create modal) - protected
      (wrap-login (wrap-routes fk-api-routes))
      ;; TabGrid AJAX routes - protected

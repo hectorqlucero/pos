@@ -1,12 +1,12 @@
 (ns pos.handlers.pos.controller
-  (:require [pos.handlers.pos.model   :as model]
+  (:require [pos.config.loader       :as cfg]
+            [pos.handlers.pos.model   :as model]
             [pos.handlers.pos.view    :as view]
             [pos.layout               :refer [application]]
             [pos.i18n.core            :as i18n]
             [pos.models.util          :refer [get-session-id]]
             [pos.services.qrcode     :as qrcode]
             [clojure.data.json        :as json]
-            [clojure.java.io          :as io]
             [hiccup.core              :as hiccup]))
 
 (defn pos
@@ -52,20 +52,27 @@
         {:status  400
          :headers {"Content-Type" "application/json"}
          :body    (json/write-str {:ok false :error "No items in cart"})}
-        (let [total    (reduce + 0 (map #(* (:cantidad %) (:precio %)) items))
-              cambio   (- (double pago) (double total))
-              venta-id (model/register-sale-tx!
-                        {:total      total
-                         :pago       pago
-                         :cambio     (max cambio 0)
-                         :usuario_id user-id}
-                        items)]
+        (let [raw-cotizacion-id (:cotizacion_id body)
+              cotizacion-id     (when (and raw-cotizacion-id (not= raw-cotizacion-id ""))
+                                  (try (Long/parseLong (str raw-cotizacion-id))
+                                       (catch Exception _ nil)))
+              total             (reduce + 0 (map #(* (:cantidad %) (:precio %)) items))
+              cambio            (- (double pago) (double total))
+              site-name         (get-in (cfg/get-all-configs) [:app-config :site-name])
+              venta-id          (model/register-sale-tx!
+                                 {:total         total
+                                  :pago          pago
+                                  :cambio        (max cambio 0)
+                                  :usuario_id    user-id
+                                  :cotizacion_id cotizacion-id}
+                                 items)]
           {:status  200
            :headers {"Content-Type" "application/json"}
-           :body    (json/write-str {:ok      true
-                                     :venta_id venta-id
-                                     :total    total
-                                     :cambio   (max cambio 0)})})))
+           :body    (json/write-str {:ok        true
+                                     :venta_id  venta-id
+                                     :total     total
+                                     :cambio    (max cambio 0)
+                                     :site_name site-name})})))
     (catch Exception e
       (println "[ERROR] POS register-sale failed:" (.getMessage e))
       {:status  500

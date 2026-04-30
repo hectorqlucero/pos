@@ -20,9 +20,10 @@
 ;;   ["/settings"  "SETTINGS" "bi bi-gear" "U" 30]
 (def custom-nav-links
   "Custom navigation links (non-dropdown, not entity-based)"
-  [["/" "HOME" "bi bi-house" nil 0]
-   ["/pos" "POS" "bi bi-cart" nil 10]
-   ["/print-labels" "IMPRIMIR ETIQUETAS" "bi bi-upc-scan" nil 12]])
+[["/" "HOME" "bi bi-house" nil 0]
+    ["/pos" "POS" "bi bi-cart" nil 10]
+    ["/cotizaciones" "COTIZACIONES" "bi bi-file-earmark-text" nil 11]
+    ["/print-labels" "IMPRIMIR ETIQUETAS" "bi bi-upc-scan" nil 12]])
 
 ;; Custom dropdown menus (not entity-based).
 ;; Use :order on the dropdown itself to control its position among other dropdowns.

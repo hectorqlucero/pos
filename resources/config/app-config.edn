@@ -96,6 +96,16 @@
  :img-url      "http://localhost:3000/uploads/"
  :path         "/uploads/"
 
- ;; --- File Upload Settings ---
- :max-upload-mb 5
- :allowed-image-exts ["jpg" "jpeg" "png" "gif" "bmp" "webp"]}
+;; --- File Upload Settings ---
+  :max-upload-mb 5
+  :allowed-image-exts ["jpg" "jpeg" "png" "gif" "bmp" "webp"]
+
+  ;; --- Company Info (bilingual) ---
+  :company {:name {:es "Pescador Bicicletas" :en "Pescador Bicycles"}
+            :address {:es "Av. Principal 123, Ciudad" :en "123 Main Street, City"}
+            :phone {:es "+52 123 456 7890" :en "+52 123 456 7890"}
+            :email {:es "info@pescadorbikes.com" :en "info@pescadorbikes.com"}
+            :website {:es "www.pescadorbikes.com" :en "www.pescadorbikes.com"}
+            :rfc "PECJ123456ABC"
+            :notes {:es "Precio sujeto a cambios sin previo aviso. Servicio garantizado por 30 días."
+                    :en "Price subject to changes without prior notice. Service guaranteed for 30 days."}}}
